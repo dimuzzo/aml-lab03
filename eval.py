@@ -1,4 +1,8 @@
+import os
 import torch
+import torch.nn as nn
+from dataset.dataloader import get_dataloaders
+from models.customnet import CustomNet
 
 def evaluate(model, val_loader, criterion, device):
     """Evaluates the model over the validation set."""
@@ -42,7 +46,7 @@ def main():
     checkpoint_path = 'checkpoints/best_model.pth'
     if os.path.exists(checkpoint_path):
         print(f"Loading weights from {checkpoint_path}...")
-        model.load_state_dict(torch.load(checkpoint_path, map_location=device))
+        model.load_state_dict(torch.load(checkpoint_path, map_location=device, weights_only=True))
     else:
         print("Warning: checkpoint not found. Evaluating with untrained weights.")
 
